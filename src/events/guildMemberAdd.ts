@@ -1,4 +1,4 @@
-import { Client, GuildMember } from 'discord.js'
+import { bold, Client, GuildMember } from 'discord.js'
 import { GenerateMemberJoinImage } from '../utils/customImages'
 import { readFileSync } from 'fs'
 
@@ -16,7 +16,7 @@ export default async (
     if (welcomeChannel!.isSendable()) {
       welcomeChannel.send({
         files: [welcomeImage],
-        content: `Bienvenue sur le discord de l'ASF ${newMember.toString()}`
+        content: bold(`Bienvenue sur le Discord de l'ASF ${newMember.toString()}`)
       })
     } else {
       console.error(`Can't send message in channel ${welcomeChannel}`)
