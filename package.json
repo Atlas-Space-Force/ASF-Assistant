@@ -6,8 +6,7 @@
     "test": "npm run build && npm run start",
     "build": "npx rimraf dist && tsc",
     "start": "node dist/",
-    "prod": "npm run build && node dist/ prod",
-    "launch": "npm run build && cd dist/ && node launcher.js"
+    "prod": "npm run build && node dist/ prod"
   },
   "author": "",
   "license": "ISC",
@@ -20,7 +19,7 @@
     "jimp": "^0.22.10",
     "mongodb": "^6.11.0",
     "mongoose": "^6.8.3",
-    "pureimage": "^0.4.13"
+    "pureimage": "^0.4.18"
   },
   "description": "",
   "devDependencies": {

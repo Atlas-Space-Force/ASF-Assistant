@@ -1,8 +1,17 @@
-import { ApplicationCommandType, Client, Collection, InteractionType } from "discord.js";
+import {
+  ApplicationCommandType,
+  Client,
+  Collection,
+  InteractionType
+} from 'discord.js'
 
-declare module "discord.js" {
-	export interface Client {
-		localComponents: Collection<string, BaseComponentData>;
-		localCommands: Collection<ApplicationCommandType, Collection<string, ApplicationCommandData>>;
-	}
+declare module 'discord.js' {
+  export interface Client {
+    localComponents: Collection<string, BaseComponentData>
+    localCommands: Collection<
+      ApplicationCommandType,
+      Collection<string, ApplicationCommandData>
+    >
+    config: { [key: string]: any }
+  }
 }

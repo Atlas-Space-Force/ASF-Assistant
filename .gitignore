@@ -2,5 +2,6 @@ node_modules/
 dist/
 guildBackups/
 /test*
-!assets/images/.gitkeep
+assets/images/tmp/**
+!assets/images/tmp/.gitkeep
 .env
