@@ -1,0 +1,10 @@
+{
+  "NEW_MEMBER_CHANNEL_ID": "",
+  "NEW_MEMBER_WELCOME_MESSAGE": "",
+  "VOICE_CHANNEL_GENERATORS": [
+    {
+      "generatorId":"",
+      "nameTemplate":""
+    }
+  ]
+}

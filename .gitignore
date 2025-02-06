@@ -2,6 +2,9 @@ node_modules/
 dist/
 guildBackups/
 /test*
+assets/configs/**
+!assets/configs/.gitkeep
+!assets/configs/example.json
 assets/images/tmp/**
 !assets/images/tmp/.gitkeep
-.env
+*.env
