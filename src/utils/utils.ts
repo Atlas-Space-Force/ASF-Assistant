@@ -51,6 +51,37 @@ export function groupArray<T> (
     .filter((single, index) => index < length)
 }
 
+
+export function lazy<T>(getter: (...values: any[]) => T): (...args: any[]) => { value: T } {
+  return (...args: any[]) => {
+    return {
+      get value() {
+        const value = getter(...args);
+        Object.defineProperty(this, 'value', { value });
+        return value;
+      }
+    };
+  };
+}
+
+// Fonction pour générer une chaîne à partir de l'expression régulière
+export function generateStringFromRegex (regex: RegExp, ...values: string[]): string {
+  // Convertir l'expression régulière en chaîne de caractères
+  const regexString = regex.source
+
+  // Remplacer les groupes de capture par les valeurs fournies
+  let resultString = regexString;
+  const captureGroupRegex = /\((?!\?)\s*(?:[^()]*?(?:\([^()]*?\)[^()]*?)*?)\s*\)/
+  values.forEach(value => {
+    // Expression régulière pour trouver les groupes de capture
+    resultString = resultString.replace(captureGroupRegex, value)
+  })
+
+  resultString = resultString.replace(/\(|\)|\?|\:|\[.+\]|\+/g, "")
+
+  return resultString
+}
+
 const lookup: [string, number][] = [
   ['M', 1000],
   ['CM', 900],

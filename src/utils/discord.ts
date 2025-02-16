@@ -1,4 +1,4 @@
-import { GuildMember } from 'discord.js'
+import { GuildMember, StringSelectMenuBuilder } from 'discord.js'
 import { writeFileSync } from 'fs'
 import { sleep } from './utils'
 
@@ -16,5 +16,12 @@ export async function downloadGuildMemberProfilePicture (member: GuildMember) {
     await writeFileSync(picturePath, Buffer.from(buffer))
   })
   await sleep(100)
-  return picturePath;
+  return picturePath
+}
+
+export function getDummyStringSelectMenu () {
+  return new StringSelectMenuBuilder()
+    .setCustomId(`dummy-${Math.random() * Date.now()}`)
+    .setDisabled(true)
+    .setOptions({ label: '❌', value: '❌' })
 }

@@ -7,14 +7,20 @@ import { romanToInt } from "../utils/utils";
 export default async (client: Client) => {
 	client.config ??= {}
 	const guildConfigsFilePath = `assets/configs`
-	for(const file of readdirSync(guildConfigsFilePath)){
-		client.config[file.split(".")[0]] = JSON.parse(readFileSync(`${guildConfigsFilePath}/${file}`, "utf-8"))
+	const configFiles = readdirSync(guildConfigsFilePath)
+	for(const file of configFiles.filter(file => file.endsWith(".json"))){
+		try{
+			const guildId = file.split(".")[0];
+			client.config[guildId] = JSON.parse(readFileSync(`${guildConfigsFilePath}/${file}`, "utf-8"))
+		}catch {
+			console.error(`Failed parsing of config ${file}`)
+		}
 	}
 	
 	client.user?.setPresence({ activities: [], status: "online" });
 	console.log(`Logged in as ${client?.user?.tag} !`);
 	await Loader.loadCommands({ deleteUnknownCommands: true }).catch(console.error);
-	// await Loader.loadComponents().catch(console.error);
+	await Loader.loadComponents().catch(console.error);
 	InteractionHandler.start();
 
 	//Réinitialisation du suivi des nombres pour les clients vocaux

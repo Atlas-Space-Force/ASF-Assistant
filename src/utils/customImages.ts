@@ -3,40 +3,6 @@ import { createReadStream, createWriteStream, existsSync } from 'fs'
 import * as PImage from 'pureimage'
 import { downloadGuildMemberProfilePicture } from './discord.js'
 
-function applyCircularMask(ctx : PImage.Context, imageBitmap: PImage.Bitmap) : PImage.Context {
-       
-    // Dessiner l'image originale sur le canvas
-    ctx.drawImage(imageBitmap, 0, 0);
-    
-    // Créer un masque circulaire
-    const maskCanvas = PImage.make(imageBitmap.width, imageBitmap.height);
-    const maskCtx = maskCanvas.getContext('2d');
-    
-    // Remplir le masque en noir
-    maskCtx.fillStyle = '#000000';
-    maskCtx.fillRect(0, 0, imageBitmap.width, imageBitmap.height);
-    
-    // Dessiner un cercle blanc (la partie visible)
-    maskCtx.fillStyle = '#ffffff';
-    maskCtx.beginPath();
-    maskCtx.arc(imageBitmap.width / 2, imageBitmap.height / 2, Math.min(imageBitmap.width, imageBitmap.height) / 2, 0, 2 * Math.PI);
-    maskCtx.fill();
-    
-    // Appliquer le masque
-    const imageData = ctx.getImageData(0, 0, imageBitmap.width, imageBitmap.height);
-    const maskData = maskCtx.getImageData(0, 0, imageBitmap.width, imageBitmap.height);
-    
-    for (let i = 0; i < imageData.data.length; i += 4) {
-        // Utiliser la valeur du masque (noir ou blanc) comme alpha
-        imageData.data[i + 3] = maskData.data[i]; // Le canal rouge du masque comme alpha
-    }
-    ctx.clearRect(0,0,imageBitmap.width, imageBitmap.height)
-    ctx.putImageData(imageData, 0, 0);
-    
-    // Sauvegarder le résultat
-    return ctx
-}
-
 export async function GenerateMemberJoinImage (member: GuildMember) {
   const canvas = PImage.make(1000, 300)
   const c = canvas.getContext('2d')
